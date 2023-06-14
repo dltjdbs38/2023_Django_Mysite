@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from pybo import views # 추가
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("pybo/", views.index),  # 추가 views.py의 index 함수를 사용하겠다.
 ]
