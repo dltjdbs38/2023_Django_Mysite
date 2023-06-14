@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ["*"] # 수정
 # Application definition
 
 INSTALLED_APPS = [ # 프로그램
+    "pybo.apps.PyboConfig",# DB사용을 위한 추가 - pybo도 app 취급, pybo의 apps.py에서 가져옴
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
