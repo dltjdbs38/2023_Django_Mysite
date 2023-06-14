@@ -30,7 +30,8 @@ ALLOWED_HOSTS = ["*"] # 수정
 
 
 # Application definition
-
+# python manage.py migrate를 하면 INSTALLED_APPS 가 (admin, auth, contenttypes 이런 앱들이) 변경되면 적용이 되는 것이다.
+# DB만들고 나서 migrate해줄 때는 makemigrate 먼저 해야한다. (admin, session 이런 건 기본앱이라 migrate만 해도 되는데 내가 직접 새로만든 DB나 앱들은 makemigrations 해줘야 함.
 INSTALLED_APPS = [ # 프로그램
     "pybo.apps.PyboConfig",# DB사용을 위한 추가 - pybo도 app 취급, pybo의 apps.py에서 가져옴
     "django.contrib.admin",
