@@ -15,10 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from pybo import views # 추가
+from django.urls import path, include # 다른 앱의 urls.py 통쨰로 이용하기 위해 
+# from pybo import views # 추가 -> 삭제 이제 pybo urls.py로 다 넘겨버리겠다.
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("pybo/", views.index),  # 추가 views.py의 index 함수를 사용하겠다.
+    path("pybo/", include('pybo.urls')),  # 아예 pybo의 urls.py가 다 해라. 
 ]
