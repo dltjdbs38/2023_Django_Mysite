@@ -1,11 +1,8 @@
 # from django.http import HttpResponse # 추가
-from django.shortcuts import render # render : template에게 컨텐츠를 전달하는 함수. template : 사용자에게 보여주기 위해 html
+from django.shortcuts import render, get_object_or_404 # render : template에게 컨텐츠를 전달하는 함수. template : 사용자에게 보여주기 위해 html
 from pybo.models import Question
-# def index(request): # 추가 - 실제 사용자에게 보여지는 공간. request는 clien의 요청
-#     return HttpResponse("pybo에서 응답해줄 내용")
 
 ### views.py는 client와 template의 중간자 역할. 데이터를 넘겨주고, 정의하는 부분
-
 
 # 우리는 오늘 DB와 연동한 template를 사용자에게 보여줄 것이다.
 def index(request): # 사용자로부터 인자를 받자(요청 = request)
@@ -16,7 +13,10 @@ def index(request): # 사용자로부터 인자를 받자(요청 = request)
 
 # 질문 pybo/1 , pybo/2 에 들어갈 때 보여줄 함수 정의
 def detail(req, q_id): # 아까 urls.py에서 만든 <int:q_id> 를 detail 이 알아야한다.
-    q = Question.objects.get(id=q_id)
+    # q = Question.objects.get(id=q_id)
+    q = get_object_or_404(Question, pk=q_id)
+    # primary key가 있는 q_id면 
+    # 없는 q_id 를 요청하면 (ex 29249) 404 띄워주기 
     context = {'question' : q} # dictionary로 프론트단에 넘겨줄 데이터 포장
     return render(req, 'pybo/question_detail.html', context) # 요청, 템플릿을 누가받을건지, 넘겨줄내용
 
