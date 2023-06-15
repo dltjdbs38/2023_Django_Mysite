@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Document</title>
+    <title>질문 상세</title>
 </head>
 <body>
     <h1> 질문 제목 : {{ question.subject }}</h1>
     <div> {% comment %} css 적용 및 영역분할 {% endcomment %}
         질문 내용 : {{ question.content }}
+    </div>
+    <h5>{{ question.answer_set.count }}개의 답변이 있습니다.</h5>
+    <div>
+        <ul>
+            {% for a in question.answer_set.all %}
+                <li>{{ a.content }}</li>
+            {% endfor %}
+        </ul>
     </div>
     <form action="{% url 'pybo:answer_create' question.id %}" method="post">
         {% csrf_token %} {% comment %} csrf는 변조 방지 {% endcomment %}
