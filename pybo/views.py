@@ -12,5 +12,11 @@ def index(request): # 사용자로부터 인자를 받자(요청 = request)
     question_list = Question.objects.order_by('-create_date') # DB의 objects를 가져와서 시간순 정렬
     # order_by default는 내림차순, 우리는 최근부터 보여줘야하니까 오름차순으로 -
     context = {'question_list' : question_list} # dict로 포장해서 사용자에게 보내주기
-    return render(request, 'pybo/question_list.html', context) # 요청, template 경로, 보여줄내용
+    return render(request, 'pybo/question_list.html', context) # 요청, template 경로, 넘겨줄내용
+
+# 질문 pybo/1 , pybo/2 에 들어갈 때 보여줄 함수 정의
+def detail(req, q_id): # 아까 urls.py에서 만든 <int:q_id> 를 detail 이 알아야한다.
+    q = Question.objects.get(id=q_id)
+    context = {'question' : q} # dictionary로 프론트단에 넘겨줄 데이터 포장
+    return render(req, 'pybo/question_detail.html', context) # 요청, 템플릿을 누가받을건지, 넘겨줄내용
 

@@ -4,17 +4,17 @@
 <head>
     <title>질문 게시판</title>
 </head>
-<body> {% comment %} <!-- python으로 html 작성할 때는 {%  %} {% end %} 사용 --> {% endcomment %}
+<body> {% comment %} python으로 html 작성할 때는 {%  %} {% end %} 사용 {% endcomment %}
     {% if question_list %}
         <ul>
-            {% for q in question_list %} {% comment %}<!--파이썬 변수 불러올 때는 {{  }}--> {% endcomment %}
-                <li><a href="/pybo/{{ q.id }}">{{ q.subject }}</a></li> {% comment %} <!--list 목록 + a 링크이동, href="#" 아직 미정--> {% endcomment %}
-                {% comment %} <!--href="/pybo/q.id"는 /pybo/1 /pybo/2 이렇게 이동함--> {% endcomment %}
+            {% for q in question_list %} {% comment %}파이썬 변수 불러올 때는 {{  }} {% endcomment %}
+                <li><a href="/pybo/{{ q.id }}">{{ q.subject }} {{ q.create_date}}</a></li> {% comment %} list 목록 + a 링크이동, href="#" 아직 미정 {% endcomment %}
+                {% comment %} href="/pybo/q.id"는 /pybo/1 /pybo/2 이렇게 이동함 {% endcomment %}
                 
-                {% comment %} <!--{{forloop.counter}} 반복문이 하나 수행될때마다 번호 매기기, 0번부터--> {% endcomment %}
-                {% comment %} <!--{{forloop.counter()}} 반복문이 하나 수행될때마다 번호 매기기, 1번부터--> {% endcomment %}
-                {% comment %} <!--{{forloop.first}} if 구문과 함께 첫번째 반복문의 의미 --> {% endcomment %}
-                {% comment %}<!--{{forloop.last}} if 구문과 함께 마지막 반복문의 의미 --> {% endcomment %}
+                {% comment %} {{forloop.counter}} 반복문이 하나 수행될때마다 번호 매기기, 0번부터 {% endcomment %}
+                {% comment %} {{forloop.counter()}} 반복문이 하나 수행될때마다 번호 매기기, 1번부터 {% endcomment %}
+                {% comment %} {{forloop.first}} if 구문과 함께 첫번째 반복문의 의미 {% endcomment %}
+                {% comment %} {{forloop.last}} if 구문과 함께 마지막 반복문의 의미 {% endcomment %}
             {% endfor %}
         </ul>
     {% comment %} <!-- {% elif %} --> {% endcomment %}
