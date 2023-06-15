@@ -3,15 +3,27 @@
 <head>
     <title>질문 상세</title>
     {% load static %}
-    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
+    {% comment %} style.css <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
 </head>
 <body>
     {{ request }} {{ question }}
-    <h1> 질문 제목 : {{ question.subject }}</h1>
-    <div> {% comment %} css 적용 및 영역분할 {% endcomment %}
-        질문 내용 : {{ question.content }}
+    <div class="container my-3">
+        <h1 class="border-bottom py-2"> 질문 제목 : {{ question.subject }}</h1>
+        <div class="card my-3">
+            <div class="card-body">
+                <div class="card-text" style="white-space: pre-line;">질문 내용 : {{ question.content }}
+                </div>
+                <div class="d-flex justify-content-end">
+                    <div class="badge bg-light text-dark p-2">
+                        {{ question.create_date }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <h5>{{ question.answer_set.count }}개의 답변이 있습니다.</h5>
+
     <div>
         <ul>
             {% for a in question.answer_set.all %}
