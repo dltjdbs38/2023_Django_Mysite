@@ -1,6 +1,7 @@
 # from django.http import HttpResponse # 추가
-from django.shortcuts import render, get_object_or_404 # render : template에게 컨텐츠를 전달하는 함수. template : 사용자에게 보여주기 위해 html
-from pybo.models import Question
+from django.shortcuts import render, get_object_or_404, redirect # render : template에게 컨텐츠를 전달하는 함수. template : 사용자에게 보여주기 위해 html
+from pybo.models import Question # , Answer
+from django.utils import timezone
 
 ### views.py는 client와 template의 중간자 역할. 데이터를 넘겨주고, 정의하는 부분
 
@@ -19,4 +20,14 @@ def detail(req, q_id): # 아까 urls.py에서 만든 <int:q_id> 를 detail 이 �
     # 없는 q_id 를 요청하면 (ex 29249) 404 띄워주기 
     context = {'question' : q} # dictionary로 프론트단에 넘겨줄 데이터 포장
     return render(req, 'pybo/question_detail.html', context) # 요청, 템플릿을 누가받을건지, 넘겨줄내용
-
+# 각 질문 pybo/2에 대한 질문 답변 POST 하기
+def answer_create(req,q_id):
+    ## sol1.
+    q = get_object_or_404(Question, pk= q_id)
+    q.answer_set.create(content= req.POST.get('content'),
+                        create_date = timezone.now()) # 포스트 방식 요청
+    # -> create : ORM 사용해 Answer 테이블에 새로운 row 추가.
+    ## sol2. from pybo.models import Answer 를 해야함
+    # a = Answer(question = q, content= req.POST.get('content'), create_date = timezone.now())
+    # a.save()
+    return redirect('pybo:detail', q_id = q.id) # pybo에 detail

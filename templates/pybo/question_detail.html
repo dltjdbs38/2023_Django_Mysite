@@ -8,6 +8,13 @@
     <div> {% comment %} css 적용 및 영역분할 {% endcomment %}
         질문 내용 : {{ question.content }}
     </div>
-
+    <form action="{% url 'pybo:answer_create' question.id %}" method="post">
+        {% csrf_token %} {% comment %} csrf는 변조 방지 {% endcomment %}
+        <input type = 'text'>
+        {% comment %} 한줄 {% endcomment %}
+        <textarea name='content' id='content' rows=15></textarea>
+        {% comment %} 게시판처럼 여러줄 15줄 {% endcomment %}
+        <input type='submit' value='답변 등록'>
+    </form>
 </body>
 </html>
