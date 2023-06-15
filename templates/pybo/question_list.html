@@ -3,13 +3,47 @@
 <html>
 <head>
     <title>질문 게시판</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
 </head>
 <body> {% comment %} python으로 html 작성할 때는 {%  %} {% end %} 사용 {% endcomment %}
+    <div class="container my-3">
+        <table class="table">
+            <thead>
+                <tr class="table-dark">
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성일시</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if question_list %}
+                {% for q in question_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="{% url 'pybo:detail' q_id=q.id %}">{{ q.content }}</a></td>
+                    <td>{{ q.create_date }}</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    질문이 없습니다.
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
     {% if question_list %}
         <ul>
             {% for q in question_list %} {% comment %}파이썬 변수 불러올 때는 {{  }} {% endcomment %}
                 <li><a href="{% url 'pybo:detail' q_id=q.id %}">{{ q.subject }} {{ q.create_date}}</a></li> {% comment %} list 목록 + a 링크이동, href="#" 아직 미정 {% endcomment %}
-                {% comment %} href="/pybo/q.id"는 /pybo/1 /pybo/2 이렇게 이동함 {% endcomment %}
+                {% comment %} href="/pybo/{q.id}"는 /pybo/1 /pybo/2 이렇게 이동함 {% endcomment %}
                 {% comment %} views.py에 detail함수에 만약 q_id 말고 q_create등 다른 인자도 있으면
                 저렇게 특정해서 q_id = q.id 써줘야 한다. 
                 그리고 인자 여러개면 q_id = q.id q_create = q.create , 안쓰고 쓴다.
