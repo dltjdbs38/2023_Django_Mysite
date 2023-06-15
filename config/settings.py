@@ -57,7 +57,7 @@ ROOT_URLCONF = "config.urls" # urls.py 파일이 메인이다.
 TEMPLATES = [ # HTML 파일이 모인 디렉토리에 대한 설정
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / 'templates'], # 추가 - mysite밑에 templates 디렉토리에 있는 html,css,js 등을 봐라
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
