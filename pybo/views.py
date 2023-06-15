@@ -18,8 +18,9 @@ def detail(req, q_id): # 아까 urls.py에서 만든 <int:q_id> 를 detail 이 �
     q = get_object_or_404(Question, pk=q_id)
     # primary key가 있는 q_id면 
     # 없는 q_id 를 요청하면 (ex 29249) 404 띄워주기 
-    context = {'question' : q} # dictionary로 프론트단에 넘겨줄 데이터 포장
+    context = {'question' : q, 'request': req } # dictionary로 프론트단에 넘겨줄 데이터 포장
     return render(req, 'pybo/question_detail.html', context) # 요청, 템플릿을 누가받을건지, 넘겨줄내용
+
 # 각 질문 pybo/2에 대한 질문 답변 POST 하기
 def answer_create(req,q_id):
     ## sol1.
@@ -30,4 +31,4 @@ def answer_create(req,q_id):
     ## sol2. from pybo.models import Answer 를 해야함
     # a = Answer(question = q, content= req.POST.get('content'), create_date = timezone.now())
     # a.save()
-    return redirect('pybo:detail', q_id = q.id) # pybo에 detail
+    return redirect('pybo:detail', q_id = q.id) # pybo에 detail 함수에다가 

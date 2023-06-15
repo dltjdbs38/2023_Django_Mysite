@@ -2,8 +2,11 @@
 <html>
 <head>
     <title>질문 상세</title>
+    {% load static %}
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
+    {{ request }} {{ question }}
     <h1> 질문 제목 : {{ question.subject }}</h1>
     <div> {% comment %} css 적용 및 영역분할 {% endcomment %}
         질문 내용 : {{ question.content }}
