@@ -5,6 +5,19 @@
         <h5 class="my-3 border-bottom py-2">질문 등록</h5>
         <form action="{% url 'pybo:question_create' %}" method="post">
             {% csrf_token %}
+            {{ form }} 
+            {% if form.errors%}
+            <div class="alert alert-danger" role="alert">
+                {% for field in form %}
+                {% if field.errors %}
+                <div>
+                    <strong>{{ form.label }}</strong>
+                    {{ field.errors }}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
             {% comment %} {{ form.as_p }} 이거 대신 직접 작성 {% endcomment %}
             <p class="mb-3">
                 <label for="id_subject">제목을 입력하세요!!</label>

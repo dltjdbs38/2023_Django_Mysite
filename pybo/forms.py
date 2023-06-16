@@ -1,5 +1,5 @@
 from django import forms
-from pybo.models import Question
+from pybo.models import Question, Answer
 
 class QuestionForm(forms.ModelForm):
     class Meta: 
@@ -9,7 +9,15 @@ class QuestionForm(forms.ModelForm):
         #     "subject": forms.TextInput(attrs= {"class":"form-control"}),
         #     "content": forms.Textarea(attrs= {"class":"form-control", "rows":10}),
         # }
-        # labels = {
-        #     "subject" : "제목을 입력하세요!!",
-        #     "content" : "내용을 입력해보세요!!"
-        # }
+        labels = {
+            "subject" : "제목을 입력하세요!!",
+            "content" : "내용을 입력해보세요!!"
+        }
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ["content"]
+        labels = {
+            "content" : "답변해줄 내용을 입력하세요."
+        }
