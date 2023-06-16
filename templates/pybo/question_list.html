@@ -1,4 +1,5 @@
 <!-- ! + Enter 하면 기본 형식 바로 가져올 수 있음-->
+{% extends "pybo/base.html" %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,7 @@
     </style>
 </head>
 <body> {% comment %} python으로 html 작성할 때는 {%  %} {% end %} 사용 {% endcomment %}
+{% block my_content %}
     <div class="container my-3">
         <table class="table">
             <thead>
@@ -58,5 +60,6 @@
     {% comment %} <!-- {% elif %} --> {% endcomment %}
     {% comment %} <!-- {% else %} --> {% endcomment %}
     {% endif %} {% comment %} <!--endif는 한번만 닫아주면 됨--> {% endcomment %}
+{% endblock my_content %}
 </body>
 </html>
