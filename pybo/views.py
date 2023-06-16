@@ -36,5 +36,13 @@ def answer_create(req,q_id):
     return redirect('pybo:detail', q_id = q.id) # pybo에 detail 함수에다가 
 
 def question_create(req):
-    form = QuestionForm()
+    print(req)
+    if req.method == "POST":
+        form = QuestionForm(req.POST)
+        if form.is_valid(): # 만약 form에 데이터가 있으면
+            q = form.save(commit=False) # ORM / commit=False 는 임시저장
+            q.create_date = timezone.now()
+            q.save()
+    else: # POST가 아니면 단순 페이지 보여주기만. 
+        form = QuestionForm()
     return render(req, 'pybo/question_form.html', {'form': form})

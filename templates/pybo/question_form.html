@@ -1,10 +1,12 @@
 {% extends "pybo/base.html" %}
 {% block my_content %}
-    <div>
-        <h5>질문 등록</h5>
+<title>질문 등록</title>
+    <div class="container">
+        <h5 class="my-3 border-bottom py-2">질문 등록</h5>
         <form action="{% url 'pybo:question_create' %}" method="post">
+            {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">저장하기</button>
+            <button type="submit" class="btn btn-primary">저장하기</button>
         </form>
     </div>
 {% endblock %}
