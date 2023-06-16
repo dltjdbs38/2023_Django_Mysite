@@ -5,7 +5,7 @@
         <h5 class="my-3 border-bottom py-2">질문 등록</h5>
         <form action="{% url 'pybo:question_create' %}" method="post">
             {% csrf_token %}
-            {{ form }} 
+            {% comment %} {{ form }} -> 이 form은 label이랑 input창 {% endcomment %} 
             {% if form.errors%}
             <div class="alert alert-danger" role="alert">
                 {% for field in form %}

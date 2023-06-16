@@ -2,7 +2,9 @@
 from django.shortcuts import render, get_object_or_404, redirect # render : template에게 컨텐츠를 전달하는 함수. template : 사용자에게 보여주기 위해 html
 from pybo.models import Question # , Answer
 from django.utils import timezone
-from pybo.forms import QuestionForm # forms.py에서 Class import 
+from pybo.forms import QuestionForm, AnswerForm # forms.py에서 Class import 
+from django.http import HttpResponseNotAllowed # get 을 허용하지 않겠다.
+
 
 ### views.py는 client와 template의 중간자 역할. 데이터를 넘겨주고, 정의하는 부분
 
@@ -24,19 +26,35 @@ def detail(req, q_id): # 아까 urls.py에서 만든 <int:q_id> 를 detail 이 �
     return render(req, 'pybo/question_detail.html', context) # 요청, 템플릿을 누가받을건지, 넘겨줄내용
 
 # 각 질문 pybo/2에 대한 질문 답변 POST 하기
-def answer_create(req,q_id):
-    ## sol1.
-    q = get_object_or_404(Question, pk= q_id)
-    q.answer_set.create(content= req.POST.get('content'),
-                        create_date = timezone.now()) # 포스트 방식 요청
-    # -> create : ORM 사용해 Answer 테이블에 새로운 row 추가.
-    ## sol2. from pybo.models import Answer 를 해야함
-    # a = Answer(question = q, content= req.POST.get('content'), create_date = timezone.now())
-    # a.save()
-    return redirect('pybo:detail', q_id = q.id) # pybo에 detail 함수에다가 
+# def answer_create(req,q_id):
+#     ## sol1.
+#     q = get_object_or_404(Question, pk= q_id)
+#     q.answer_set.create(content= req.POST.get('content'),
+#                         create_date = timezone.now()) # 포스트 방식 요청
+#     # -> create : ORM 사용해 Answer 테이블에 새로운 row 추가.
+#     ## sol2. from pybo.models import Answer 를 해야함
+#     # a = Answer(question = q, content= req.POST.get('content'), create_date = timezone.now())
+#     # a.save()
+#     return redirect('pybo:detail', q_id = q.id) # pybo에 detail 함수에다가 
+
+def answer_create(req, q_id):
+    if req.method=="POST":
+        form = AnswerForm(req.POST)
+        q = get_object_or_404(Question, pk=q_id)
+        if form.is_valid():
+            if form.is_valid():
+                answer = form.save(commit=False)
+                answer.create_date = timezone.now()
+                answer.save()
+                return redirect("pybo:detail", q_id = q.id)
+        else:
+            return HttpResponseNotAllowed("POST만 가능하다")
+    context = {'form':form, 'question':q}
+    return render(req, "pybo/question_detail.html", context)
 
 def question_create(req):
-    print(req)
+    print(req) # <WSGIRequest: GET '/pybo/question/create'>
+    print(req.POST)
     if req.method == "POST":
         form = QuestionForm(req.POST)
         if form.is_valid(): # 만약 form에 데이터가 있으면
