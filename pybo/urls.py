@@ -10,4 +10,6 @@ urlpatterns = [ # 이미 :8000/pybo/로 들어옴
     # 그리고 views.py 의 detail 함수에 연결해 줄 것이다.
     path("answer/create/<int:q_id>", views.answer_create, name = 'answer_create'), # 질문 등록
     # 사용자가 버튼을 누르는 순간 views에 answer_create에게 전달
+    path("question/create", views.question_create, name="question_create"), 
+    # question_list에서 바S로 질문등록하기 버튼
 ]

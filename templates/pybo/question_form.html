@@ -1,0 +1,10 @@
+{% extends "pybo/base.html" %}
+{% block my_content %}
+    <div>
+        <h5>질문 등록</h5>
+        <form action="{% url 'pybo:question_create' %}" method="post">
+            {{ form.as_p }}
+            <button type="submit">저장하기</button>
+        </form>
+    </div>
+{% endblock %}
