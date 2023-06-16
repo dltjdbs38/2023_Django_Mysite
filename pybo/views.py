@@ -38,15 +38,15 @@ def detail(req, q_id): # 아까 urls.py에서 만든 <int:q_id> 를 detail 이 �
 #     return redirect('pybo:detail', q_id = q.id) # pybo에 detail 함수에다가 
 
 def answer_create(req, q_id):
+    q = get_object_or_404(Question, pk=q_id)
     if req.method=="POST":
         form = AnswerForm(req.POST)
-        q = get_object_or_404(Question, pk=q_id)
         if form.is_valid():
-            if form.is_valid():
-                answer = form.save(commit=False)
-                answer.create_date = timezone.now()
-                answer.save()
-                return redirect("pybo:detail", q_id = q.id)
+            answer = form.save(commit=False)
+            answer.question = q # answer는 연결된 question이 반드시 있어야 한다.
+            answer.create_date = timezone.now()
+            answer.save()
+            return redirect("pybo:detail", q_id = q.id)
         else:
             return HttpResponseNotAllowed("POST만 가능하다")
     context = {'form':form, 'question':q}
