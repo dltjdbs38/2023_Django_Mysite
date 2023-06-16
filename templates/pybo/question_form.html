@@ -5,7 +5,15 @@
         <h5 class="my-3 border-bottom py-2">질문 등록</h5>
         <form action="{% url 'pybo:question_create' %}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% comment %} {{ form.as_p }} 이거 대신 직접 작성 {% endcomment %}
+            <p class="mb-3">
+                <label for="id_subject">제목을 입력하세요!!</label>
+                <input type="text" name="subject" class="form-control" id="subject" value="{{ form.subject.value | default_if_none:'' }}">    
+            </p>
+            <p class="mb-3">
+                <label for="id_content">내용을 입력해보세요!!</label>
+                <textarea name="content" cols="40" rows="10" class="form-control" id="content">{{ form.content.value | default_if_none:'' }}</textarea>
+            </p>
             <button type="submit" class="btn btn-primary">저장하기</button>
         </form>
     </div>
